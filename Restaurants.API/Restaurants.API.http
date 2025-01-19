@@ -1,17 +1,12 @@
 @host = https://localhost
 @port = 5289
 
-@Restaurants.API_HostAddress = {{host}}:{{port}}
+@Restaurants.API_HostAddress = https://localhost:7199
 
-GET {{Restaurants.API_HostAddress}}/api/weatherforecast
-Accept: application/json
-Guid: {{$guid}}
-
+GET {{Restaurants.API_HostAddress}}/api/restaurants
 
 ###
-POST {{Restaurants.API_HostAddress}}/api/weatherforecast
-Content-Type: application/json
 
-{
-  "email", "test@tes.com"
-}
+GET {{Restaurants.API_HostAddress}}/api/restaurants/1
+
+###
