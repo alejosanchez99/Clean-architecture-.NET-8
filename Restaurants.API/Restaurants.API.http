@@ -10,3 +10,20 @@ GET {{Restaurants.API_HostAddress}}/api/restaurants
 GET {{Restaurants.API_HostAddress}}/api/restaurants/1
 
 ###
+
+POST {{Restaurants.API_HostAddress}}/api/restaurants
+Content-Type: application/json
+
+{
+  "name" : "Spicy Delights",
+  "description" : "A culinary experience like no other",
+  "category": "Fine Dining",
+  "hasDelivery": true,
+  "contactEmail": "info@gourmetdelights.com",
+  "contactNumber": "555-123-45-67",
+  "city": "Metropolis",
+  "street": "456 Gourmet Avenue",
+  "postalCode": "54321"
+}
+
+###

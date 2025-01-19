@@ -1,6 +1,4 @@
-﻿using Restaurants.Domain.Entities;
-
-namespace Restaurants.Application.Dishes.Dtos;
+﻿namespace Restaurants.Application.Dishes.Dtos;
 public class DishDto
 {
     public int Id { get; set; }

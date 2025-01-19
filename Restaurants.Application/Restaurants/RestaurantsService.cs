@@ -10,6 +10,16 @@ internal class RestaurantsService(IRestaurantsRespository restaurantsRespository
                                   ILogger<RestaurantsService> logger,
                                   IMapper mapper) : IRestaurantsService
 {
+    public Task<int> Create(CreateRestaurantDto createRestaurantDto)
+    {
+        logger.LogInformation("Creating a new restaurant");
+
+        Restaurant restaurant = mapper.Map<Restaurant>(createRestaurantDto);
+
+        return restaurantsRespository.Create(restaurant);
+
+    }
+
     public async Task<IEnumerable<RestaurantDto>> GetAllRestaurants()
     {
         logger.LogInformation("Getting all restaurants");
