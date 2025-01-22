@@ -33,7 +33,7 @@ DELETE {{Restaurants.API_HostAddress}}/api/restaurants/5
 ###
 
 
-PATCH {{Restaurants.API_HostAddress}}/api/restaurants/98
+PATCH {{Restaurants.API_HostAddress}}/api/restaurants/2
 Content-Type: application/json
 
 {
