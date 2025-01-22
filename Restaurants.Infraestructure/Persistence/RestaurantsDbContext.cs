@@ -3,7 +3,7 @@ using Restaurants.Domain.Entities;
 
 namespace Restaurants.Infraestructure.Persistence;
 
-internal class RestauntsDbContext(DbContextOptions<RestauntsDbContext> options) : DbContext(options)
+internal class RestaurantsDbContext(DbContextOptions<RestaurantsDbContext> options) : DbContext(options)
 {
     internal DbSet<Restaurant> Restaurants { get; set; }
     internal DbSet<Dish> Dishes { get; set; }
