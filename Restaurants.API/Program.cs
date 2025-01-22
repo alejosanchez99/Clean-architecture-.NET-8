@@ -6,6 +6,8 @@ using Serilog;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddSwaggerGen();
+
 
 builder.Services.AddApplication();
 builder.Services.AddInfraestructure(builder.Configuration);
@@ -21,6 +23,12 @@ IRestaurantSeeder seeder = scope.ServiceProvider.GetRequiredService<IRestaurantS
 await seeder.Seed();
 
 app.UseSerilogRequestLogging();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseHttpsRedirection();
 
