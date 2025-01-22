@@ -2,7 +2,6 @@ using Restaurants.Application.Extensions;
 using Restaurants.Infraestructure.Extensions;
 using Restaurants.Infraestructure.Seeders;
 using Serilog;
-using Serilog.Events;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -12,10 +11,7 @@ builder.Services.AddApplication();
 builder.Services.AddInfraestructure(builder.Configuration);
 builder.Host.UseSerilog((context, configuration) =>
 {
-    configuration.MinimumLevel.Override("Microsoft", LogEventLevel.Warning).MinimumLevel
-                              .Override("Microsoft.EntityFrameworkCore", LogEventLevel.Information)
-                              .WriteTo.File("Logs/Restaurant-API-.log", rollingInterval: RollingInterval.Day, rollOnFileSizeLimit: true)
-                              .WriteTo.Console(outputTemplate: "[{Timestamp:dd-MM HH:mm:ss} {Level:u3}] |{SourceContext}| {NewLine}{Message:lj}{NewLine}{Exception}");
+    configuration.ReadFrom.Configuration(context.Configuration);
 });
 
 WebApplication app = builder.Build();
