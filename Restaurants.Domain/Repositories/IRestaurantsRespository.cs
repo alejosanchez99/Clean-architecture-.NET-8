@@ -7,6 +7,6 @@ public interface IRestaurantsRespository
     Task<IEnumerable<Restaurant>> GetAllAsync();
     Task<Restaurant?> GetByIdAsync(int id);
     Task<int> Create(Restaurant entity);
-    Task Delete(Restaurant restaurant);
+    Task Delete(Restaurant entity);
     Task SaveChanges();
 }
