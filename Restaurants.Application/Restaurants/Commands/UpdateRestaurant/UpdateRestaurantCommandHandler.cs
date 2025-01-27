@@ -15,7 +15,7 @@ public class UpdateRestaurantCommandHandler(IRestaurantsRespository restaurantsR
     public async Task Handle(UpdateRestaurantCommand request, CancellationToken cancellationToken)
     {
         logger.LogInformation("Updating restaurant with id: {RestaurantId} with {@UpdatedRestaurant}", request.Id, request);
-        
+
         Restaurant? restaurant = await restaurantsRespository.GetByIdAsync(request.Id)
             ?? throw new NotFoundException(nameof(Restaurant), request.Id.ToString());
 

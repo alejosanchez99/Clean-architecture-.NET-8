@@ -7,23 +7,23 @@ public class ErrorHandlingMiddleware(ILogger<ErrorHandlingMiddleware> logger) : 
 {
     public async Task InvokeAsync(HttpContext context, RequestDelegate next)
     {
-		try
-		{
-			await next.Invoke(context);
-		}
-		catch(NotFoundException notFound)
-		{
-			context.Response.StatusCode = 404;
-			await context.Response.WriteAsync(notFound.Message);
+        try
+        {
+            await next.Invoke(context);
+        }
+        catch (NotFoundException notFound)
+        {
+            context.Response.StatusCode = 404;
+            await context.Response.WriteAsync(notFound.Message);
 
-			logger.LogWarning(notFound.Message);
-		}
-		catch (Exception exception)
-		{
-			logger.LogError(exception, exception.Message);
+            logger.LogWarning(notFound.Message);
+        }
+        catch (Exception exception)
+        {
+            logger.LogError(exception, exception.Message);
 
-			context.Response.StatusCode = 500;
-			await context.Response.WriteAsync("Something went wrong");
-		}
+            context.Response.StatusCode = 500;
+            await context.Response.WriteAsync("Something went wrong");
+        }
     }
 }
