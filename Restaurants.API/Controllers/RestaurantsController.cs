@@ -7,6 +7,8 @@ using Restaurants.Application.Restaurants.Commands.UpdateRestaurant;
 using Restaurants.Application.Restaurants.Dtos;
 using Restaurants.Application.Restaurants.Queries.GetAllRestaurants;
 using Restaurants.Application.Restaurants.Queries.GetRestaurantById;
+using Restaurants.Domain.Constants;
+using Restaurants.Infraestructure.Authorization;
 
 namespace Restaurants.API.Controllers;
 
@@ -25,6 +27,7 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize(Policy = PolicyNames.HasNationality)]
     public async Task<ActionResult<RestaurantDto>> GetById([FromRoute] int id)
     {
         RestaurantDto restaurant = await mediator.Send(new GetRestaurantByIdQuery(id));
@@ -55,6 +58,7 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
 
 
     [HttpPost]
+    [Authorize(Roles = UserRoles.Admin)]
     public async Task<IActionResult> CreateRestaurant(CreateRestaurantCommand command)
     {
         int id = await mediator.Send(command);

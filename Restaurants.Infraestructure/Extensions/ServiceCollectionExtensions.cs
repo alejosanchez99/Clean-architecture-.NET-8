@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Restaurants.Domain.Entities;
 using Restaurants.Domain.Repositories;
+using Restaurants.Infraestructure.Authorization;
 using Restaurants.Infraestructure.Persistence;
 using Restaurants.Infraestructure.Repositories;
 using Restaurants.Infraestructure.Seeders;
@@ -18,10 +20,15 @@ public static class ServiceCollectionExtensions
                                                                       .EnableSensitiveDataLogging());
 
         services.AddIdentityApiEndpoints<User>()
+                .AddRoles<IdentityRole>()
+                .AddClaimsPrincipalFactory<RestaurantUserClaimsPrincipalFactory>()
                 .AddEntityFrameworkStores<RestaurantsDbContext>();
 
         services.AddScoped<IRestaurantSeeder, RestaurantSeeder>();
         services.AddScoped<IRestaurantsRespository, RestaurantsRepository>();
         services.AddScoped<IDishesRepository, DishesRepository>();
+
+        services.AddAuthorizationBuilder()
+                .AddPolicy(PolicyNames.HasNationality, builder => builder.RequireClaim(AppClaimTypes.Nationality, "German", "Polish"));
     }
 }

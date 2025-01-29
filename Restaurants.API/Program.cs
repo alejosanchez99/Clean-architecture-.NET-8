@@ -11,6 +11,7 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.AddPresentation();
 builder.Services.AddApplication();
 builder.Services.AddInfraestructure(builder.Configuration);
+
 builder.Host.UseSerilog((context, configuration) =>
 {
     configuration.ReadFrom.Configuration(context.Configuration);
