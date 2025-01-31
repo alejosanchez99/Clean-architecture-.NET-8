@@ -1,11 +1,11 @@
 @host = https://localhost
 @port = 5289
-@token = CfDJ8CT6qQZkr71OvgSgL2Vc9pqQ1w0P6Ecb4-b7p76sVSUf3A3WvnbC-totUb-vVhT5GYKZ0PuN9ERzPBSdtRUFoH0VReCTEmlrOcSVqyWGapSzVgukPDixX07vHn4Z2a4JmKKfQejocRyrJwBQOKTLfV_xBIN8lImLud-qFklU_p7-2q6B1fK_ywynggv-C6MiCHuoj9COIVoKRQxv1ugPq-m87fbPVIUOMLmVpXoz7HLJzCMgqSaDncDIMT6THRezXeQrV2zNV_Dgb_AbpNSJJP8b6IowBBtsW2QZUVyrHXzd8mbGkUbE0kr_aXkswbeE62aeA8iUyw6J_YgC21KkWHYYtEalJ7bbE7We-LgNxjz1vPlbwN1l9Jm4MoUdw5dFtpaz9c0qW-BzKWwhmsF-9ZrQLvnKliqu4hVIEiMQnOxD4CV3dp7yYI8j2Y44njxIrzdiK84hxFl5KTCteA1oDWrJs3IGsUqaSSZJGxnubdCHzn0nbbCcWPNvzM66V7QQT34_Hu8ujXm-K_GdH3y_tjC4ic9jfylSdRPYzalmq2it4BueKPYJOCwSkPHUc28SrQzyJgYyPSUbMyuOVICiioqsTQx4Q_dzVUYkn3KWdCfIrBeqxST86PiqzQUbzClpGsthMfXsvEbUjVJdDxyYNvRoi1KH5sTyFwn69IrMH4iNGh0v-al0yEKz4rcRqDaIHA
+@token = CfDJ8CT6qQZkr71OvgSgL2Vc9ppdP2Y7fzYtf8L1ZwReiP01PTGdgeT9FmP1vdpdGOqCiR0KroBPgZug5crhlYn2j5YR740DrMuyixCLHfN0ppy4azTa0JjJqjq-i3muNlRpBfbj0QoYZVc2QDrPCB58Bznxt7EP7Fda371kGJ7bjWQI_oB0LYS2rPxUq3W11G05RWLLN1UV8NJYashDoJG3a15CklVq3iA4R7MPSVLtKooxu7AJjIINpvjPKYhBEjIZIt_FpGHdT9piRf7MYem4rDB-BGNg-KgG4Vla80VEpR9C5B7KZfMMvixUwvEJlJ6RNlQVNVGJ_CvZbwPHNEf4gWwwPTyNuoT8FLDoLP6F6WpT2Vl3zB1Us-0HWk1CDhy_kDwdrfPXZjdxraV-V9k6NTiAofmVa1tMnvG8U33b8HtEpOw4VcEXUDcvzqiU3Rsm-SrODTCnqabp7yG54_oocGzOhC9YHobZupVmKHFKratm1NWd1Jueh6Q1Nmf8umAqnLz2RbrlToeIxHVeR96FNnOuEoe2s0y7Poc5BcP-1gEm9MlrceCJ6mCTDi84Dp3uLM1GhO0ERP6dJczD90OU5tS-zffXRQ0_om_NA2pcQbi4s9FnU4WS5Q3RpwxWsf0MdjvZcxpAmGt1QR4ZCSnX74s_jP6eyJ8O4cW7StiZsHUGJurhPmnE_h0rvf1E1OdtKMIEnxLVmC-VHCAnqVqX7yuqr8kfij60jsJuPgKTqG8mumG4AI15WKt4eoZhW6an1xyae-I0_C4W7_mi2r21Fl4zsN2JwyUEyYVJUtSNikbw
 
 @Restaurants.API_HostAddress = https://localhost:7199
 
 GET {{Restaurants.API_HostAddress}}/api/restaurants
-# Authorization: Bearer {{token}}
+Authorization: Bearer {{token}}
 
 ###
 
@@ -17,7 +17,7 @@ POST {{Restaurants.API_HostAddress}}/api/restaurants
 Content-Type: application/json
 
 {
-      "Name": "Owner2 restaurant2",
+      "Name": "Owner restaurant",
       "Description": "A cozy restaurant serving a variety of delicious dishes.",
       "Category": "Indian",
       "HasDelivery": true,
@@ -35,11 +35,12 @@ DELETE {{Restaurants.API_HostAddress}}/api/restaurants/5
 ###
 
 
-PATCH {{Restaurants.API_HostAddress}}/api/restaurants/2
+PATCH {{Restaurants.API_HostAddress}}/api/restaurants/8
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
-      "Name": "restaurant2",
+      "Name": "Updated name",
       "Description": "A dishes.",
       "HasDelivery": false
 }
@@ -47,6 +48,8 @@ Content-Type: application/json
 ###
 
 POST {{Restaurants.API_HostAddress}}/api/restaurants/3/dishes
+Authorization: Bearer {{token}}
+
 Content-Type: application/json
 
 {
@@ -59,6 +62,7 @@ Content-Type: application/json
 ###
 
 GET {{Restaurants.API_HostAddress}}/api/restaurants/3/dishes
+Authorization: Bearer {{token}}
 
 ###
 
@@ -74,7 +78,7 @@ POST {{Restaurants.API_HostAddress}}/api/identity/register
 Content-Type: application/json
 
 {
-   "email": "admin@test.com",
+   "email": "owner2@test.com",
    "password": "Password1!"
 }
 
@@ -84,7 +88,19 @@ POST {{Restaurants.API_HostAddress}}/api/identity/login
 Content-Type: application/json
 
 {
-   "email": "testuser@test.com",
+   "email": "owner2@test.com",
    "password": "Password1!"
 }
  
+###
+
+POST {{Restaurants.API_HostAddress}}/api/identity/userRole
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "userEmail" : "owner2@test.com",
+  "roleName": "Owner"
+}
+
+###

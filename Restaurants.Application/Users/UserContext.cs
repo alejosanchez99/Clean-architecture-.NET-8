@@ -19,7 +19,10 @@ public class UserContext(IHttpContextAccessor httpContextAccessor) : IUserContex
         string email = user.FindFirst(claim => claim.Type == ClaimTypes.Email)!.Value;
         IEnumerable<string> roles = user.Claims.Where(claim => claim.Type == ClaimTypes.Role)
                                                .Select(claim => claim.Value);
+        string? nationality = user.FindFirst(claim => claim.Type == "Nationality")?.Value;
+        string dateOfBirthString = user.FindFirst(claim => claim.Type == "DateOfBirth")?.Value;
+        DateOnly? dateOfBirth = !string.IsNullOrEmpty(dateOfBirthString) ? DateOnly.ParseExact(dateOfBirthString, "yyyy-MM-dd") : null;
 
-        return new CurrentUser(userId, email, roles);
+        return new CurrentUser(userId, email, roles, nationality, dateOfBirth);
     }
 }
