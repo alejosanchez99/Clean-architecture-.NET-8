@@ -1,7 +1,4 @@
-﻿
-using Microsoft.Extensions.Logging;
-using Restaurants.Domain.Exceptions;
-using System;
+﻿using Restaurants.Domain.Exceptions;
 
 namespace Restaurants.API.Middlewares;
 
