@@ -6,44 +6,56 @@ using Restaurants.Infraestructure.Extensions;
 using Restaurants.Infraestructure.Seeders;
 using Serilog;
 
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-
-builder.AddPresentation();
-builder.Services.AddApplication();
-builder.Services.AddInfraestructure(builder.Configuration);
-
-builder.Host.UseSerilog((context, configuration) =>
+try
 {
-    configuration.ReadFrom.Configuration(context.Configuration);
-});
+    WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-WebApplication app = builder.Build();
+    builder.AddPresentation();
+    builder.Services.AddApplication();
+    builder.Services.AddInfraestructure(builder.Configuration);
 
-IServiceScope scope = app.Services.CreateScope();
-IRestaurantSeeder seeder = scope.ServiceProvider.GetRequiredService<IRestaurantSeeder>();
-await seeder.Seed();
+    builder.Host.UseSerilog((context, configuration) =>
+    {
+        configuration.ReadFrom.Configuration(context.Configuration);
+    });
 
-app.UseMiddleware<ErrorHandlingMiddleware>();
-app.UseMiddleware<RequestTimeLoggingMiddleware>();
+    WebApplication app = builder.Build();
 
-app.UseSerilogRequestLogging();
+    IServiceScope scope = app.Services.CreateScope();
+    IRestaurantSeeder seeder = scope.ServiceProvider.GetRequiredService<IRestaurantSeeder>();
+    await seeder.Seed();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseMiddleware<ErrorHandlingMiddleware>();
+    app.UseMiddleware<RequestTimeLoggingMiddleware>();
+
+    app.UseSerilogRequestLogging();
+
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+
+    app.UseHttpsRedirection();
+
+    app.MapGroup("api/identity")
+       .WithTags("Identity")
+       .MapIdentityApi<User>();
+
+    app.UseAuthorization();
+
+    app.MapControllers();
+
+    app.Run();
+
 }
-
-app.UseHttpsRedirection();
-
-app.MapGroup("api/identity")
-   .WithTags("Identity")
-   .MapIdentityApi<User>();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+catch (Exception exception)
+{
+    Log.Fatal(exception, "Application startup failed");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
 
 public partial class Program { }
